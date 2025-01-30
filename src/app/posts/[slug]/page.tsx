@@ -1,5 +1,5 @@
 /** libs */
-import { getPostDetail } from '@/libs/sanity/data'
+import { getPosts, getPostDetail } from '@/libs/sanity/data'
 import { urlFor } from '@/libs/sanity/utils'
 import { PortableText } from 'next-sanity'
 import { format } from 'date-fns'
@@ -9,6 +9,18 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import { ButtonBack } from '@/components/button-back'
 // import { PortableContent } from '@/components/portable-content'
+
+export async function generateStaticParams() {
+  const posts = await getPosts()
+
+  if (!posts) {
+    return []
+  }
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }))
+}
 
 export default async function PostDetail({ params }: { params: Promise<{ slug: string }> }) {
   const slug = (await params).slug
