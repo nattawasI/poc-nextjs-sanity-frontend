@@ -4,6 +4,7 @@ import { urlFor } from '@/libs/sanity/utils'
 import { PortableText } from 'next-sanity'
 import { format } from 'date-fns'
 import { notFound } from 'next/navigation'
+
 /** components */
 import Image from 'next/image'
 import { ButtonBack } from '@/components/button-back'
@@ -42,14 +43,14 @@ export default async function PostDetail({ params }: { params: Promise<{ slug: s
         {Array.isArray(body) && (
           <PortableText
             value={body}
-            components={{
-              types: {
-                image: ({ value }) => {
-                  console.log(value)
-                  return <img src={value} />
-                },
-              },
-            }}
+            // components={{
+            //   types: {
+            //     image: ({ value }) => {
+            //       console.log(value)
+            //       return <img src={value} />
+            //     },
+            //   },
+            // }}
           />
         )}
       </div>

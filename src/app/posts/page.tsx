@@ -1,21 +1,27 @@
 /** libs */
-import { urlFor } from '@/libs/sanity/utils'
+// import { urlFor } from '@/libs/sanity/utils'
 import { getPosts } from '@/libs/sanity/data'
-import { format } from 'date-fns'
+// import { format } from 'date-fns'
+import { notFound } from 'next/navigation'
 
 /** components */
-import Link from 'next/link'
+// import Link from 'next/link'
 import { ButtonBack } from '@/components/button-back'
-import { PostCard } from '@/components/post-card'
+// import { PostCard } from '@/components/post-card'
 
 export default async function Posts() {
   const posts = await getPosts()
+
+  if (!posts) {
+    notFound()
+  }
+
   return (
     <main className="container mx-auto min-h-screen max-w-3xl p-8">
       <ButtonBack href="/" label="Back to home" />
       <h1 className="typo-h1 mb-8">Posts</h1>
       <div className="flex flex-col gap-y-5">
-        {posts.map((post) => {
+        {/* {posts.map((post) => {
           const { title, image, publishedAt } = post
           return (
             <div className="hover:underline" key={post._id}>
@@ -28,7 +34,7 @@ export default async function Posts() {
               </Link>
             </div>
           )
-        })}
+        })} */}
       </div>
     </main>
   )
