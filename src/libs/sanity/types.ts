@@ -186,7 +186,7 @@ export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../poc-nextjs-sanity-frontend/src/libs/sanity/data.ts
 // Variable: POSTS_QUERY
-// Query: *[  _type == "post"  && defined(slug.current)  ]|order(publishedAt desc)[0...10]{_id, title, slug, image, publishedAt}
+// Query: *[_type == "post"]{_id, title, slug, image, publishedAt}
 export type POSTS_QUERYResult = Array<{
   _id: string;
   title: string | null;
@@ -261,7 +261,7 @@ export type POST_DETAIL_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[\n  _type == \"post\"\n  && defined(slug.current)\n  ]|order(publishedAt desc)[0...10]{_id, title, slug, image, publishedAt}": POSTS_QUERYResult;
+    "*[_type == \"post\"]{_id, title, slug, image, publishedAt}": POSTS_QUERYResult;
     "*[_type == \"post\" && slug.current == $slug][0]": POST_DETAIL_QUERYResult;
   }
 }
