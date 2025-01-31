@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation'
 /** components */
 import Link from 'next/link'
 import { ButtonBack } from '@/components/button-back'
-import { PostCard } from '@/components/post-card'
+import { PostCard, PostCardImage, PostCardBody, PostCardHeading, PostCardMetadata } from '@/components/post-card'
 
 export default async function Posts() {
   const posts = await getPosts()
@@ -23,14 +23,17 @@ export default async function Posts() {
       <div className="flex flex-col gap-y-5">
         {posts.map((post) => {
           const { title, image, publishedAt } = post
+          const finalImage = image ? urlFor(image)?.url() : null
           return (
             <div className="hover:underline" key={post._id}>
               <Link href={`/posts/${post.slug?.current as string}`} prefetch={false} className="block">
-                <PostCard
-                  image={image ? urlFor(image)?.url() : null}
-                  title={title as string}
-                  publishedAt={format(new Date(publishedAt as string), 'MMM dd, yyyy')}
-                />
+                <PostCard>
+                  {finalImage ? <PostCardImage src={finalImage} alt={title as string} /> : null}
+                  <PostCardBody>
+                    <PostCardHeading>{title as string}</PostCardHeading>
+                    <PostCardMetadata>{format(new Date(publishedAt as string), 'MMM dd, yyyy')}</PostCardMetadata>
+                  </PostCardBody>
+                </PostCard>
               </Link>
             </div>
           )

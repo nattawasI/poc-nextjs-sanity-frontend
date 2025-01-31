@@ -1,21 +1,34 @@
+import { HTMLAttributes } from 'react'
+import { cn } from '@/libs/utils'
 import Image from 'next/image'
 
-type Props = { title: string; image: string | null | undefined; publishedAt: string }
+const PostCard = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
+  return <div className={cn('flex gap-x-5', className)} {...props} />
+}
 
-const PostCard = ({ title, image, publishedAt }: Props) => {
+const PostCardImage = ({
+  src,
+  alt,
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement> & { src: string; alt: string }) => {
   return (
-    <div className="flex gap-x-5">
-      {image && (
-        <div className="relative aspect-video w-[160px] shrink-0 rounded-xl">
-          <Image src={image} alt={title} priority fill sizes="112px" className="object-cover object-center" />
-        </div>
-      )}
-      <div>
-        <h3 className="line-clamp-2 text-xl font-semibold tracking-tight">{title}</h3>
-        <p className="mt-2 text-sm text-neutral-500">{publishedAt}</p>
-      </div>
+    <div className={cn('relative aspect-video w-[160px] shrink-0 rounded-xl', className)} {...props}>
+      <Image src={src} alt={alt} priority fill sizes="112px" className="object-cover object-center" />
     </div>
   )
 }
 
-export { PostCard }
+const PostCardBody = (props: HTMLAttributes<HTMLDivElement>) => {
+  return <div {...props} />
+}
+
+const PostCardHeading = ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => {
+  return <h3 className={cn('line-clamp-2 text-xl font-semibold tracking-tight', className)} {...props} />
+}
+
+const PostCardMetadata = ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => {
+  return <p className={cn('mt-2 text-sm text-neutral-500', className)} {...props} />
+}
+
+export { PostCard, PostCardImage, PostCardBody, PostCardHeading, PostCardMetadata }

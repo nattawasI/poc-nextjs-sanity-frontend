@@ -1,9 +1,10 @@
 /** libs */
-import { getPosts, getPostDetail } from '@/libs/sanity/data'
+import { getPostDetail, getPostParams } from '@/libs/sanity/data'
 import { urlFor } from '@/libs/sanity/utils'
 import { PortableText } from 'next-sanity'
 import { format } from 'date-fns'
 import { notFound } from 'next/navigation'
+import { getImageDimensions } from '@sanity/asset-utils'
 
 /** components */
 import Image from 'next/image'
@@ -11,14 +12,14 @@ import { ButtonBack } from '@/components/button-back'
 // import { PortableContent } from '@/components/portable-content'
 
 export async function generateStaticParams() {
-  const posts = await getPosts()
+  const posts = await getPostParams()
 
-  if (!posts) {
+  if (!Array.isArray(posts)) {
     return []
   }
 
   return posts.map((post) => ({
-    slug: post.slug,
+    slug: post.slug?.current || '',
   }))
 }
 
@@ -55,14 +56,27 @@ export default async function PostDetail({ params }: { params: Promise<{ slug: s
         {Array.isArray(body) && (
           <PortableText
             value={body}
-            // components={{
-            //   types: {
-            //     image: ({ value }) => {
-            //       console.log(value)
-            //       return <img src={value} />
-            //     },
-            //   },
-            // }}
+            components={{
+              types: {
+                image: ({ value }) => {
+                  const { width, height } = getImageDimensions(value)
+                  const imageSrc = urlFor(value)?.url()
+                  return (
+                    <>
+                      {imageSrc ? (
+                        <Image
+                          src={urlFor(value)?.url() as string}
+                          alt={value.alt || ''}
+                          loading="lazy"
+                          width={width}
+                          height={height}
+                        />
+                      ) : null}
+                    </>
+                  )
+                },
+              },
+            }}
           />
         )}
       </div>

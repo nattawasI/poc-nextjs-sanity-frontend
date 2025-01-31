@@ -331,6 +331,11 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.10.5.tgz#3a1c12c959010a55c17d46b395ed3047b545c246"
   integrity sha512-kkKUDVlII2DQiKy7UstOR1ErJP8kUKAQ4oa+SQtM0K+lPdmmjj0YnnxBgtTVYH7mUKtbsxeFC9y0AmK7Yb78/A==
 
+"@sanity/asset-utils@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@sanity/asset-utils/-/asset-utils-2.2.1.tgz#aab6b03464a55d7e23f4578bd2b38a934941fe1c"
+  integrity sha512-dBsZWH5X6ANcvclFRnQT9Y+NNvoWTJZIMKR5HT6hzoRpRb48p7+vWn+wi1V1wPvqgZg2ScsOQQcGXWXskbPbQQ==
+
 "@sanity/client@^6.22.4", "@sanity/client@^6.27.2":
   version "6.27.2"
   resolved "https://registry.yarnpkg.com/@sanity/client/-/client-6.27.2.tgz#7588595881c76c271e048e0c547208a0c5940c08"
