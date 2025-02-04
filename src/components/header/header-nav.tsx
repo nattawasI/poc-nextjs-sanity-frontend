@@ -21,20 +21,13 @@ const items: NavItemType[] = [
   },
 ]
 
-const HeaderNav = ({ theme = 'light' }: { theme?: 'dark' | 'light' }) => {
+const HeaderNav = () => {
   const pathname = usePathname()
   return (
     <nav>
       {items.map((item) => (
         <div key={item.id} className="flex justify-end">
-          <Link
-            href={item.href}
-            className={cn(
-              'typo-heading-2 uppercase',
-              theme === 'light' ? 'text-neutral-100' : '',
-              item.href === pathname ? 'font-bold' : '',
-            )}
-          >
+          <Link href={item.href} className={cn('typo-heading-2 uppercase', item.href === pathname ? 'font-bold' : '')}>
             {item.label}
           </Link>
         </div>

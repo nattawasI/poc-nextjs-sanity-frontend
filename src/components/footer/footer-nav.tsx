@@ -1,5 +1,8 @@
+'use client'
+
 /** libs */
 import { cn } from '@/libs/utils'
+import { usePathname } from 'next/navigation'
 
 /** components */
 import { Link } from 'next-view-transitions'
@@ -14,7 +17,8 @@ const items: NavItemType[] = [
   { id: 'connect', href: '/connect', label: 'Connect' },
 ]
 
-const FooterNav = ({ isHomePage, theme = 'light' }: { isHomePage?: boolean; theme?: 'dark' | 'light' }) => {
+const FooterNav = ({ isHomePage }: { isHomePage?: boolean }) => {
+  const pathname = usePathname()
   return (
     <nav className="flex gap-x-6">
       {items.map((item) => (
@@ -23,9 +27,9 @@ const FooterNav = ({ isHomePage, theme = 'light' }: { isHomePage?: boolean; them
           href={item.href}
           className={cn(
             'typo-heading-2 transition-all',
-            theme === 'light' ? 'text-neutral-100' : '',
             !isHomePage ? 'opacity-40' : '',
             'hover:underline hover:opacity-100',
+            item.href === pathname ? 'font-bold underline opacity-100' : '',
           )}
         >
           {item.label}

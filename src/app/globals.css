@@ -18,7 +18,7 @@
 
 @layer base {
   body {
-    @apply font-lineseedsansth text-base leading-7 text-neutral-600;
+    @apply font-lineseedsansth text-base leading-7 text-neutral-100;
   }
 }
 

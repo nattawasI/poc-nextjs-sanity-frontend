@@ -19,17 +19,11 @@ const items: SocialNavItemType[] = [
   { id: 'youtube', href: '/', label: 'Navigate to Youtube', icon: <Youtube /> },
 ]
 
-const SocialNav = ({ theme = 'light' }: { theme?: 'dark' | 'light' }) => {
+const SocialNav = () => {
   return (
     <nav className="flex gap-x-6 max-md:hidden">
       {items.map((item) => (
-        <Link
-          key={item.id}
-          href={item.href}
-          target="_blank"
-          aria-label={item.label}
-          className={cn('block h-5 w-5', theme === 'light' ? 'text-neutral-100' : '')}
-        >
+        <Link key={item.id} href={item.href} target="_blank" aria-label={item.label} className={cn('block h-5 w-5')}>
           {item.icon}
         </Link>
       ))}
