@@ -1,20 +1,29 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
+import { SanityLive } from '@/libs/sanity/live'
+import { ViewTransitions } from 'next-view-transitions'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+const lineSeedSansTHFont = localFont({
+  src: '../fonts/lineseedsansth-regular.woff2',
+  display: 'swap',
+  variable: '--font-lineseedsansth',
 })
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+const optimaFont = localFont({
+  src: [
+    {
+      path: '../fonts/optima-regular.woff',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../fonts/optima-bold.woff',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-optima',
 })
-
-export const metadata: Metadata = {
-  title: 'Next.js + Sanity POC',
-}
 
 export default function RootLayout({
   children,
@@ -22,8 +31,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>{children}</body>
-    </html>
+    <ViewTransitions>
+      <html lang="en">
+        <body className={`${lineSeedSansTHFont.variable} ${optimaFont.variable}`}>
+          {children}
+          <SanityLive />
+        </body>
+      </html>
+    </ViewTransitions>
   )
 }

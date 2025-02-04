@@ -2,7 +2,7 @@
 import { cn } from '@/libs/utils'
 
 /** components */
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 import { ArrowLeft } from 'lucide-react'
 
 const ButtonBack = ({ href, label, className }: { href: string; label: string; className?: string }) => {

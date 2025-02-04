@@ -1,22 +1,16 @@
-import { defineQuery } from 'next-sanity'
-import { client } from './client'
-
-const POSTS_QUERY = defineQuery(`*[_type == "post"]{_id, title, slug, image, publishedAt}`)
+import { sanityFetch } from '@/libs/sanity/live'
+import { POSTS_QUERY, POST_PARAMS_QUERY, POST_DETAIL_QUERY } from './query'
 
 const getPosts = async () => {
-  return client.fetch(POSTS_QUERY, {}, { next: { revalidate: 60 } })
+  return sanityFetch({ query: POSTS_QUERY })
 }
-
-const POST_PARAMS_QUERY = defineQuery(`*[_type == "post"]{slug}`)
 
 const getPostParams = async () => {
-  return client.fetch(POST_PARAMS_QUERY, {}, { next: { revalidate: 60 } })
+  return sanityFetch({ query: POST_PARAMS_QUERY })
 }
 
-const POST_DETAIL_QUERY = defineQuery(`*[_type == "post" && slug.current == $slug][0]`)
-
-const getPostDetail = (slug: string) => {
-  return client.fetch(POST_DETAIL_QUERY, { slug }, { next: { revalidate: 60 } })
+const getPostDetail = (params: Promise<{ slug: string }>) => {
+  return sanityFetch({ query: POST_DETAIL_QUERY, params })
 }
 
 export { getPosts, getPostParams, getPostDetail }

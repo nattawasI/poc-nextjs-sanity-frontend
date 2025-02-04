@@ -1,10 +1,12 @@
 /** libs */
-import { getPostDetail, getPostParams } from '@/libs/sanity/data'
+import { client } from '@/libs/sanity/client'
 import { urlFor } from '@/libs/sanity/utils'
 import { PortableText } from 'next-sanity'
 import { format } from 'date-fns'
 import { notFound } from 'next/navigation'
 import { getImageDimensions } from '@sanity/asset-utils'
+import { sanityFetch } from '@/libs/sanity/live'
+import { POST_PARAMS_QUERY, POST_DETAIL_QUERY } from '@/libs/sanity/query'
 
 /** components */
 import Image from 'next/image'
@@ -12,7 +14,7 @@ import { ButtonBack } from '@/components/button-back'
 // import { PortableContent } from '@/components/portable-content'
 
 export async function generateStaticParams() {
-  const posts = await getPostParams()
+  const posts = await client.fetch(POST_PARAMS_QUERY)
 
   if (!Array.isArray(posts)) {
     return []
@@ -24,8 +26,7 @@ export async function generateStaticParams() {
 }
 
 export default async function PostDetail({ params }: { params: Promise<{ slug: string }> }) {
-  const slug = (await params).slug
-  const post = await getPostDetail(slug)
+  const { data: post } = await sanityFetch({ query: POST_DETAIL_QUERY, params })
 
   if (!post) {
     notFound()
@@ -36,7 +37,7 @@ export default async function PostDetail({ params }: { params: Promise<{ slug: s
   const postImageUrl = image ? urlFor(image)?.url() : null
 
   return (
-    <main className="container mx-auto min-h-screen max-w-3xl p-8">
+    <div className="container mx-auto min-h-screen max-w-3xl p-8">
       <ButtonBack href="/posts" label="Back to posts" />
       <h1 className="typo-h1">{title as string}</h1>
       <p className="mt-4 text-neutral-500">Published: {format(new Date(publishedAt as string), 'MMM dd, yyyy')}</p>
@@ -80,6 +81,6 @@ export default async function PostDetail({ params }: { params: Promise<{ slug: s
           />
         )}
       </div>
-    </main>
+    </div>
   )
 }
